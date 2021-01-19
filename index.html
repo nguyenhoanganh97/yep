@@ -11,13 +11,14 @@
 </head>
 
 <body>
-    <a id="change-page" onclick="changePage(event)" href="#spinning-container">
+    <button id="change-page" onclick="changePage(event)" data-scroll="spinning-container">
         Change page
-    </a>
+    </button>
     <script type="text/javascript">
         function changePage(event) {
-            const address = event.target.href
-            event.target.href = address.includes("game-container") ? address.replace("game-container", "spinning-container") : address.replace("spinning-container", "game-container")
+            const address = event.target.dataset.scroll
+            document.getElementById(address).scrollIntoView()
+            event.target.dataset.scroll = address === "spinning-container" ? "game-container" : "spinning-container"
         }
     </script>
     <div id="game-container">

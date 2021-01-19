@@ -15,6 +15,7 @@ html {
   right: 20px;
   padding: 10px 20px;
   cursor: pointer;
+  z-index: 3;
 }
 
 #game-container {
