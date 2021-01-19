@@ -138,6 +138,7 @@ class Game {
     showAnswer(event) {
         const spans = document.querySelectorAll(`[data-row-index='${event.target.dataset.rowIndex}'] .crossword span`)
         for (let index = 0; index < spans.length; index++) {
+            spans.classList.add("opened")
             spans[index].style.display = "inline"
         }
     }
