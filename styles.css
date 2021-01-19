@@ -1,0 +1,263 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+#change-page {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+#game-container {
+  background-color: black;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  height: 100vh;
+}
+
+#game-container #crosswords-container {
+  width: 70%;
+  position: relative;
+}
+
+#game-container #crosswords-container .row-container {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#game-container #crosswords-container .row-container .crossword {
+  position: relative;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 1px solid white;
+  border-right: none;
+  cursor: pointer;
+}
+
+#game-container #crosswords-container .row-container .crossword.key {
+  background-color: #ff3838;
+}
+
+#game-container #crosswords-container .row-container .crossword.last {
+  border-right: 1px solid white;
+}
+
+#game-container #crosswords-container .row-container .crossword span {
+  color: white;
+  font-size: .7em;
+}
+
+#game-container #crosswords-container .serial {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+  -webkit-transition: all ease-in .2s;
+  transition: all ease-in .2s;
+}
+
+#game-container #crosswords-container .serial span {
+  color: #4cd137;
+  font-size: .8em;
+}
+
+#game-container #crosswords-container .serial:hover {
+  -webkit-transform: scale(1.5);
+          transform: scale(1.5);
+  text-shadow: 2px 2px 10px #32ff7e;
+}
+
+#game-container #question-container {
+  display: none;
+  width: 28%;
+  height: 30vh;
+}
+
+#game-container #question-container .header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 2vh 1vh;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: white;
+  border-bottom: 3px solid white;
+}
+
+#game-container #question-container .header #question-number {
+  text-align: center;
+}
+
+#game-container #question-container .header #answer-btn {
+  background: none;
+  cursor: pointer;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  -webkit-transition: all ease-in .2s;
+  transition: all ease-in .2s;
+}
+
+#game-container #question-container .header #answer-btn:hover {
+  -webkit-transform: scale(1.5);
+          transform: scale(1.5);
+  color: #4cd137;
+}
+
+#game-container #question-container .header #answer-btn:focus {
+  outline: none;
+}
+
+#game-container #question-container #question {
+  text-align: center;
+  color: white;
+  padding: 2vh 0;
+  font-size: 2rem;
+}
+
+#spinning-container {
+  background-color: paleturquoise;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+  position: relative;
+}
+
+#spinning-container #main-wheel {
+  width: 80vh;
+  height: 80vh;
+  position: relative;
+  border-radius: 50%;
+  background-color: peru;
+  border: 15px solid rebeccapurple;
+  overflow: hidden;
+  -webkit-transition: all 5s cubic-bezier(0.64, 0.7, 0.2, 0.9999);
+  transition: all 5s cubic-bezier(0.64, 0.7, 0.2, 0.9999);
+}
+
+#spinning-container #main-wheel .piece {
+  position: absolute;
+  left: 0;
+  top: 50%;
+}
+
+#spinning-container #main-wheel .piece span {
+  color: black;
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  -webkit-transform: translate(-50%, -75%);
+          transform: translate(-50%, -75%);
+}
+
+#spinning-container #spin-btn {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 10vh;
+  height: 10vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 50%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  cursor: pointer;
+  border: none;
+  -webkit-transition: all ease-in .1;
+  transition: all ease-in .1;
+}
+
+#spinning-container #spin-btn:hover {
+  -webkit-transform: translate(-50%, -50%) scale(1.1);
+          transform: translate(-50%, -50%) scale(1.1);
+}
+
+#spinning-container #spin-btn:focus {
+  outline: none;
+}
+
+/* scroll bar */
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #aaa;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* Corner */
+::-webkit-scrollbar-corner {
+  background: #f1f1f1;
+}
+/*# sourceMappingURL=styles.css.map */
