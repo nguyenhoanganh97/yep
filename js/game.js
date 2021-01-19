@@ -37,7 +37,7 @@ class Game {
     }
     drawMaxLengthRow() {
         this.maxLengthRowLeft = (this.maxLeft - this.config[this.maxLengthIndex].key) * this.crosswordSize
-        const row = this.createRow(this.config[this.maxLengthIndex], `${this.maxLengthIndex * this.crosswordSize}px`, `${this.maxLengthRowLeft}px`, this.maxLengthIndex)
+        const row = this.createRow(this.config[this.maxLengthIndex], `${this.maxLengthIndex * this.crosswordSize + this.maxLengthIndex}px`, `${this.maxLengthRowLeft}px`, this.maxLengthIndex)
         this.createSerial(this.maxLengthIndex)
         this.container.appendChild(row)
     }
@@ -46,7 +46,7 @@ class Game {
             if (index !== this.maxLengthIndex) {
                 this.createSerial(index)
                 const left = (this.maxLeft - row.key) * this.crosswordSize
-                const rowEl = this.createRow(row, `${this.crosswordSize * index}px`, `${left}px`, index)
+                const rowEl = this.createRow(row, `${this.crosswordSize * index + index}px`, `${left}px`, index)
                 this.container.appendChild(rowEl)
             }
         });
@@ -97,7 +97,7 @@ class Game {
     }
     createSerial(order) {
         const crossword = this.createCrossword(`${order + 1}`, order, null, false, true)
-        crossword.style.top = `${this.crosswordSize * order}px`
+        crossword.style.top = `${this.crosswordSize * order + order}px`
         crossword.style.left = 0
         this.container.appendChild(crossword)
     }
@@ -138,12 +138,12 @@ class Game {
     showAnswer(event) {
         const spans = document.querySelectorAll(`[data-row-index='${event.target.dataset.rowIndex}'] .crossword span`)
         for (let index = 0; index < spans.length; index++) {
-            spans[index].classList.add("opened")
+            spans[index].parentNode.classList.add("opened")
             spans[index].style.display = "inline"
         }
     }
     showQuestion(questionIndex) {
-        this.questionContainer.style.display = "block"
+        this.questionContainer.style.display = "flex"
         this.questionNumber.innerText = `Câu hỏi số ${questionIndex +  1}`
         this.question.innerText = this.config[questionIndex].question
         this.answerBtn.dataset.rowIndex = questionIndex

@@ -11,7 +11,9 @@ class SpinningWheel {
     spin() {
         const spinDeg = parseInt(this.container.dataset.spinDeg) || 0
         const min = 1800
-        const max = 5400
+        const max = 3600
+        const duration = Math.floor(Math.random() * (5 - 10)) + 10
+        this.container.style.transitionDuration = `${duration}s`
         const deg = spinDeg + Math.floor(Math.random() * (max - min)) + max
         this.container.dataset.spinDeg = deg
         this.container.style.transform = `rotate(${deg}deg)`

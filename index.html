@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spining</title>
+    <script src="js/drag-func.js"></script>
     <script src="js/game.js"></script>
     <script src="js/spinning-wheel.js"></script>
     <link rel="stylesheet" href="styles.css">
@@ -25,20 +26,29 @@
         <div id="crosswords-container">
         </div>
         <div id="question-container">
-            <div class="header">
-                <button id="answer-btn">&#8592;</button>
+            <div class="header" id="question-container-header">
                 <h1 id="question-number">Câu hỏi</h1>
             </div>
             <div id="question"></div>
+            <button id="answer-btn">Đáp án</button>
         </div>
         <script type="text/javascript">
+            dragElement(document.getElementById("question-container"))
             const config = [{
                 question: "1 thuật ngữ dùng để mô tả kích thước của quảng cáo, theo tiêu chuẩn IAB?",
                 answer: "Dimension",
                 keyCharacter: "D",
             }, {
-                question: `Các máy móc (hoặc máy tính) có khả năng bắt chước các chức năng nhận thức mà con người thường phải liên kết với tâm trí, như "học tập" và "giải quyết vấn đề" thường được gọi là?`,
+                question: `Thứ tạo nên với mục tiêu giúp máy tính có thể tự động hóa các hành vi thông minh như con người`,
                 answer: "artificial intelligence",
+                keyCharacter: "I",
+            }, {
+                question: "Công cụ tìm kiếm lớn nhất thế giới?",
+                answer: "Google",
+                keyCharacter: "G",
+            }, {
+                question: "Những cú nhấp chuột mang tính gian lận có mục đích nhằm làm thiệt hại cho các nhà quảng cáo hoặc mang lại lợi ích không chính đáng với người nhấp chuột.",
+                answer: "Click fraud",
                 keyCharacter: "I",
             }, {
                 question: "Công cụ hỗ trợ marketing có thể hoạt động 24/7",
@@ -64,10 +74,6 @@
                 question: "Chúng ta là ai?",
                 answer: "We are future",
                 keyCharacter: "A",
-            }, {
-                question: "Những cú nhấp chuột mang tính gian lận có mục đích nhằm làm thiệt hại cho các nhà quảng cáo hoặc mang lại lợi ích không chính đáng với người nhấp chuột.",
-                answer: "Click fraud",
-                keyCharacter: "I",
             }]
             const game = new Game(config, `crosswords-container`)
         </script>
@@ -75,6 +81,7 @@
     <div id="spinning-container">
         <div id="main-wheel">
         </div>
+        <div id="pointer"></div>
         <button type="button" id="spin-btn">
             <span>
                 Quay
@@ -88,7 +95,7 @@
                     title: "Uống bia",
                     color: "#2ecc71"
                 }, {
-                    title: "Vừa múa hát bài con vịt con",
+                    title: "Vừa múa vừa hát bài con vịt con",
                     color: "#3498db"
                 }, {
                     title: "Selfile hình xấu up lên group cty",
