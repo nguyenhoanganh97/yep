@@ -69,8 +69,6 @@ html {
 #game-container #crosswords-container .row-container .crossword {
   -webkit-transition: all ease-in 1s;
   transition: all ease-in 1s;
-  -webkit-animation: crossword-appear 1s;
-          animation: crossword-appear 1s;
   position: relative;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
@@ -95,6 +93,11 @@ html {
 #game-container #crosswords-container .row-container .crossword span {
   color: white;
   font-size: .7em;
+}
+
+#game-container #crosswords-container .row-container .crossword.anim {
+  -webkit-animation: crossword-appear 1s;
+          animation: crossword-appear 1s;
 }
 
 #game-container #crosswords-container .row-container .crossword.opened span {

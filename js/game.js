@@ -91,7 +91,10 @@ class Game {
         for (let index = 0; index < row.answer.length; index++) {
             let keyCharacter = false
             if (index === row.key) keyCharacter = true
-            rowContainer.appendChild(this.createCrossword(row.answer[index], rowIndex, index, keyCharacter, false, index === (row.answer.length - 1)))
+            const crossword = this.createCrossword(row.answer[index], rowIndex, index, keyCharacter, false, index === (row.answer.length - 1))
+            crossword.classList.add("anim")
+            setTimeout(() => crossword.classList.remove("anim"), 1000)
+            rowContainer.appendChild(crossword)
         }
         return rowContainer
     }
@@ -138,7 +141,8 @@ class Game {
     showAnswer(event) {
         const spans = document.querySelectorAll(`[data-row-index='${event.target.dataset.rowIndex}'] .crossword span`)
         for (let index = 0; index < spans.length; index++) {
-            spans[index].parentNode.classList.add("opened")
+            spans[index].parentNode.classList.add("anim", "opened")
+            setTimeout(() => spans[index].parentNode.classList.remove("anim"), 1000)
             spans[index].style.display = "inline"
         }
     }
