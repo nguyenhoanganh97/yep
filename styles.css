@@ -93,6 +93,7 @@ html {
 #game-container #crosswords-container .row-container .crossword span {
   color: white;
   font-size: .7em;
+  display: none;
 }
 
 #game-container #crosswords-container .row-container .crossword.anim {
@@ -100,9 +101,15 @@ html {
           animation: crossword-appear 1s;
 }
 
+#game-container #crosswords-container .row-container .crossword.flip {
+  -webkit-animation: crossword-opened 1s;
+          animation: crossword-opened 1s;
+}
+
 #game-container #crosswords-container .row-container .crossword.opened span {
   -webkit-animation: blink 1s 2;
           animation: blink 1s 2;
+  display: inline;
 }
 
 #game-container #crosswords-container .serial {
@@ -382,6 +389,36 @@ html {
   100% {
     -webkit-transform: translate(1px, -2px) rotate(-1deg);
             transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
+
+@-webkit-keyframes crossword-opened {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes crossword-opened {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
 }
 

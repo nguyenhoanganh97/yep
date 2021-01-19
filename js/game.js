@@ -122,7 +122,7 @@ class Game {
             crossword.style.fontSize = `${this.crosswordSize}px`
             crossword.addEventListener("click", () => this.showQuestion(rowIndex))
         } else {
-            span.style.display = "none"
+            // span.style.display = "none"
             crossword.classList.add("crossword")
             crossword.addEventListener("click", () => this.suggest(rowIndex, characterIndex))
             if (isKey) crossword.classList.add("key")
@@ -141,9 +141,12 @@ class Game {
     showAnswer(event) {
         const spans = document.querySelectorAll(`[data-row-index='${event.target.dataset.rowIndex}'] .crossword span`)
         for (let index = 0; index < spans.length; index++) {
-            spans[index].parentNode.classList.add("anim", "opened")
-            setTimeout(() => spans[index].parentNode.classList.remove("anim"), 1000)
-            spans[index].style.display = "inline"
+            spans[index].parentNode.classList.add("flip")
+            setTimeout(() => {
+                    spans[index].parentNode.classList.remove("flip")
+                    spans[index].parentNode.classList.add("opened")
+                }, 1000)
+                // spans[index].style.display = "inline"
         }
     }
     showQuestion(questionIndex) {
