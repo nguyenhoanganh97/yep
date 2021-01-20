@@ -12,6 +12,9 @@ function shuffle(array) {
 }
 class Game {
     constructor(config, containerSelector) {
+        this.rowOpen = document.getElementById("row-open")
+        this.pieceOpen = document.getElementById("piece-open")
+
         this.container = document.getElementById(containerSelector)
         this.question = document.getElementById("question")
         this.questionNumber = document.getElementById("question-number")
@@ -132,7 +135,9 @@ class Game {
     }
     suggest(questionIndex, characterIndex) {
         const span = document.querySelectorAll(`[data-row-index='${questionIndex}'] .crossword span`)[characterIndex]
-        if (span.style.display === "none") {
+        if (span.style.display === "none" || span.style.display === "") {
+            this.pieceOpen.currentTime = 0
+            this.pieceOpen.play()
             span.style.display = "inline"
         } else {
             span.style.display = "none"
@@ -143,11 +148,13 @@ class Game {
         for (let index = 0; index < spans.length; index++) {
             spans[index].parentNode.classList.add("flip")
             setTimeout(() => {
-                    spans[index].parentNode.classList.remove("flip")
-                    spans[index].parentNode.classList.add("opened")
-                }, 1000)
-                // spans[index].style.display = "inline"
+                spans[index].parentNode.classList.remove("flip")
+            }, 1000)
+            setTimeout(() => {
+                spans[index].parentNode.classList.add("opened")
+            }, 500)
         }
+        this.rowOpen.play()
     }
     showQuestion(questionIndex) {
         this.questionContainer.style.display = "flex"

@@ -23,6 +23,9 @@
         }
     </script>
     <div id="game-container">
+        <audio id="row-open" src="sounds/row-correct.wav"></audio>
+        <audio id="piece-open" src="sounds/open-piece.wav"></audio>
+
         <div id="crosswords-container">
         </div>
         <div id="question-container">
@@ -79,27 +82,39 @@
         </script>
     </div>
     <div id="spinning-container">
-        <div id="main-wheel">
+        <div class="wheel-container">
+            <div id="main-wheel">
+            </div>
+            <div id="pointer"></div>
+            <audio id="spinning-sound" src="sounds/spinning.wav"></audio>
+            <button type="button" id="spin-btn">
+                <span>
+                    Quay
+                </span>
+            </button>
         </div>
-        <div id="pointer"></div>
-        <button type="button" id="spin-btn">
-            <span>
-                Quay
-            </span>
-        </button>
+        <div id="penalty-container">
+            <div class="header">
+                <h1 id="question-number">Hình phạt</h1>
+            </div>
+        </div>
         <script type="text/javascript">
             const wheelConfig = [{
                     title: "Miệng phải cười trong khi ăn hết 1 lát chanh",
-                    color: "#1abc9c"
+                    color: "#12CBC4",
+                    order: 1,
                 }, {
                     title: "Uống bia",
-                    color: "#2ecc71"
+                    color: "#1289A7",
+                    order: 2,
                 }, {
                     title: "Vừa múa vừa hát bài con vịt con",
-                    color: "#3498db"
+                    color: "#0652DD",
+                    order: 3,
                 }, {
                     title: "Selfile hình xấu up lên group cty",
-                    color: "#9b59b6"
+                    color: "#1B1464",
+                    order: 4,
                 }
                 // , {
                 //     title: "hình phạt 5",
