@@ -12,8 +12,10 @@ function shuffle(array) {
 }
 class Game {
     constructor(config, containerSelector) {
+        this.biggestContainer = document.getElementById("game-container")
         this.rowOpen = document.getElementById("row-open")
         this.pieceOpen = document.getElementById("piece-open")
+        this.lastAnswerContainer = document.getElementById("last-answer")
 
         this.container = document.getElementById(containerSelector)
         this.question = document.getElementById("question")
@@ -21,6 +23,7 @@ class Game {
         this.questionContainer = document.getElementById("question-container")
         this.answerBtn = document.getElementById("answer-btn")
         this.answerBtn.addEventListener("click", (event) => this.showAnswer(event))
+        this.lastResultShow = false
         this.maxLength = 0
         const _config = config.map(row => {
             const answer = row.answer.replace(/ /g, '').toUpperCase()
@@ -38,6 +41,7 @@ class Game {
         this.container.style.height = `${this.crosswordSize * this.config.length}px`
         this.drawMaxLengthRow()
         this.drawRows()
+        this.drawLastAnswer()
     }
     drawMaxLengthRow() {
         this.maxLengthRowLeft = (this.maxLeft - this.config[this.maxLengthIndex].key) * this.crosswordSize
@@ -130,7 +134,11 @@ class Game {
             // span.style.display = "none"
             crossword.classList.add("crossword")
             crossword.addEventListener("click", () => this.suggest(rowIndex, characterIndex))
-            if (isKey) crossword.classList.add("key")
+            if (isKey) {
+                crossword.classList.add("key");
+                crossword.dataset.keyIndex = this.config[rowIndex].keyIndex
+                crossword.style.zIndex = 7
+            }
             if (isLast) crossword.classList.add("last")
         }
         return crossword
@@ -164,5 +172,66 @@ class Game {
         this.questionNumber.innerText = `Câu hỏi số ${questionIndex +  1}`
         this.question.innerText = this.config[questionIndex].question
         this.answerBtn.dataset.rowIndex = questionIndex
+    }
+
+    drawLastAnswer() {
+        const correctAnswer = this.config.sort((a, b) => a.keyIndex - b.keyIndex)
+        const row = document.createElement("div")
+        row.classList.add("answer-row")
+        correctAnswer.forEach(element => {
+            const piece = document.createElement("div")
+            piece.classList.add("answer-character")
+            piece.dataset.positionId = element.keyIndex
+            piece.style.margin = "0 2px"
+            piece.style.width = this.crosswordSize + "px"
+            piece.style.height = this.crosswordSize + "px"
+            if (element.spaceAfter) piece.style.marginRight = "20px"
+            row.appendChild(piece)
+        });
+        this.lastAnswerContainer.appendChild(row)
+    }
+
+    answerScript() {
+        if (this.lastResultShow) {
+            return
+        }
+        this.container.style.left = "-30vh"
+        this.lastAnswerContainer.style.right = "0px"
+        const movements = {}
+        setTimeout(() => {
+            const crosswords = document.querySelectorAll(".crossword.key[data-key-index]")
+            crosswords.forEach(crw => {
+                const { top, left } = crw.getBoundingClientRect()
+                const clone = crw.cloneNode(true)
+                clone.style.width = this.crosswordSize - 2 + "px"
+                clone.style.position = "absolute"
+                clone.style.top = top + "px"
+                clone.style.left = left - 1 + "px"
+                clone.style.fontSize = this.crosswordSize + "px"
+                movements[crw.dataset.keyIndex] = clone
+                this.biggestContainer.appendChild(clone)
+            });
+        }, 750)
+        setTimeout(() => {
+            const answers = document.querySelectorAll(".answer-character[data-position-id")
+            answers.forEach(asw => {
+                const { top, left } = asw.getBoundingClientRect()
+                movements[asw.dataset.positionId].style.inset = `${top}px 0 0 ${left}px`
+            })
+            setTimeout(() => {
+                answers.forEach(asw => {
+                    movements[asw.dataset.positionId].style.position = "static"
+                    movements[asw.dataset.positionId].style.width = `${this.crosswordSize}px`
+                    movements[asw.dataset.positionId].style.height = `${this.crosswordSize}px`
+                    movements[asw.dataset.positionId].style.margin = "0"
+                    asw.appendChild(movements[asw.dataset.positionId])
+                    asw.style.border = "none"
+                })
+                this.lastAnswerContainer.style.zIndex = 8
+            }, 1000)
+            setTimeout(() => {
+                this.lastAnswerContainer.style.width = "100%"
+            }, 1100)
+        }, 1000)
     }
 }

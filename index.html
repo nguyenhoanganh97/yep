@@ -16,12 +16,14 @@
         <div>
             <h1>Đi tìm ẩn số</h1>
             <span>Ureka version</span>
+            <audio id="background-sound" src="sounds/background.mp3"></audio>
         </div>
     </div>
     <div id="game-container">
         <audio id="row-open" src="sounds/row-correct.wav"></audio>
         <audio id="piece-open" src="sounds/open-piece.wav"></audio>
-
+        <div id="last-answer">
+        </div>
         <div id="crosswords-container">
         </div>
         <div id="question-container">
@@ -37,42 +39,53 @@
                 question: `Thứ tạo nên với mục tiêu giúp máy tính có thể tự động hóa các hành vi thông minh như con người`,
                 answer: "artificial intelligence",
                 keyCharacter: "I",
+                keyIndex: 3,
             }, {
                 question: "Những cú nhấp chuột mang tính gian lận có mục đích nhằm làm thiệt hại cho các nhà quảng cáo hoặc mang lại lợi ích không chính đáng với người nhấp chuột.",
                 answer: "Click fraud",
                 keyCharacter: "I",
+                keyIndex: 1,
             }, {
                 question: "Một xu hướng tất yếu trong lĩnh vực Ngân hàng hiện nay?",
                 answer: "Ebanking",
                 keyCharacter: "E",
+                keyIndex: 7,
             }, {
                 question: "Tên một trải nghiệm mô phỏng có thể giống hoặc khác hoàn toàn với thế giới thực",
                 answer: "Virtual reality",
                 keyCharacter: "A",
+                keyIndex: 9,
             }, {
                 question: "Công cụ tìm kiếm lớn nhất thế giới?",
                 answer: "Google",
                 keyCharacter: "G",
+                keyIndex: 2,
             }, {
                 question: "Công cụ hỗ trợ marketing có thể hoạt động 24/7",
                 answer: "Chatbots",
                 keyCharacter: "T",
+                keyIndex: 4,
             }, {
                 question: "Thuật ngữ để chỉ một website mà người dùng sẽ tới sau khi nhấp vào quảng cáo",
                 answer: "Landing Page",
                 keyCharacter: "L",
+                keyIndex: 6,
+                spaceAfter: true,
             }, {
                 question: "Hình thức giao tiếp với khách hàng tiềm năng để quảng bá sản phẩm hoặc dịch vụ",
                 answer: "Advertising",
                 keyCharacter: "R",
+                keyIndex: 8,
             }, {
                 question: "Chúng ta là ai?",
                 answer: "We are future",
                 keyCharacter: "A",
+                keyIndex: 5,
             }, {
                 question: "1 thuật ngữ dùng để mô tả kích thước của quảng cáo, theo tiêu chuẩn IAB?",
                 answer: "Dimension",
                 keyCharacter: "D",
+                keyIndex: 0,
             }, ]
             const game = new Game(config, `crosswords-container`)
         </script>
@@ -127,6 +140,9 @@
         </script>
     </div>
     <div class="end-screen">
+        <audio id="keyword-reading" src="sounds/keyword-reading.mp3"></audio>
+        <audio id="penalty" src="sounds/penalty.mp3"></audio>
+        <audio id="prizes" src="sounds/prizes.mp3"></audio>
         <div>
             <h1>Thanks for joinning us!!!</h1>
         </div>
@@ -134,13 +150,62 @@
     <script type="text/javascript">
         const spinningEl = document.getElementById("spinning-container")
         const gameEl = document.getElementById("game-container")
+        const backgroundSound = document.getElementById("background-sound")
+        const keywordReadingSound = document.getElementById("keyword-reading")
+        const penaltySound = document.getElementById("penalty")
+        const prizesSound = document.getElementById("prizes")
         document.addEventListener("keydown", (event) => {
+            console.log(event.keyCode)
             switch (event.keyCode) {
-                case 90:
+                case 90: //x
                     spinningEl.scrollIntoView()
                     break;
-                case 88:
+                case 88: //z
                     gameEl.scrollIntoView()
+                    break;
+                case 13: //enter
+                    game.answerScript()
+                    game.lastResultShow = true
+                    break;
+                case 77: //m backgound sound
+                    if (backgroundSound.paused) {
+                        backgroundSound.currentTime = 0
+                        console.log("keyword reading sound play")
+                        backgroundSound.play()
+                    } else {
+                        console.log("keyword reading sound pause")
+                        backgroundSound.pause()
+                    }
+                    break;
+                case 78: //n
+                    if (prizesSound.paused) {
+                        prizesSound.currentTime = 0
+                        console.log("prizesSound sound play")
+                        prizesSound.play()
+                    } else {
+                        console.log("prizesSound sound pause")
+                        prizesSound.pause()
+                    }
+                    break;
+                case 66: //B
+                    if (penaltySound.paused) {
+                        penaltySound.currentTime = 0
+                        console.log("penaltySound sound play")
+                        penaltySound.play()
+                    } else {
+                        console.log("penaltySound sound pause")
+                        penaltySound.pause()
+                    }
+                    break;
+                case 86: //V
+                    if (keywordReadingSound.paused) {
+                        keywordReadingSound.currentTime = 0
+                        console.log("keyword reading sound play")
+                        keywordReadingSound.play()
+                    } else {
+                        console.log("keyword reading sound pause")
+                        keywordReadingSound.pause()
+                    }
                     break;
                 default:
                     break;
