@@ -1,10 +1,12 @@
 class SpinningWheel {
     constructor(config, container) {
+        this.originConfig = config
         this.penContainer = document.getElementById("penalty-container")
+            // this.penNumb = document.getElementById("pen-number")
         this.spinningSound = document.getElementById("spinning-sound")
-        config.forEach(element => {
-            this.penContainer.appendChild(this.drawPenalty(element))
-        });
+            // config.forEach(element => {
+            //     this.penContainer.appendChild(this.drawPenalty(element))
+            // });
         config = [...config, ...config]
         this.container = document.getElementById(container)
             //container size
@@ -17,6 +19,8 @@ class SpinningWheel {
         this.radius = Math.floor(this.container.clientWidth / 2)
         this.calcPieceSize(config)
         this.config = config
+        this.startDeg = 23
+        this.result = 1
         this.drawPieces()
     }
     spin() {
@@ -26,11 +30,38 @@ class SpinningWheel {
         const duration = Math.floor(Math.random() * (5 - 14)) + 14
         this.container.style.transitionDuration = `${duration}s`
         const deg = spinDeg + Math.floor(Math.random() * (max - min)) + max
+
+        //calc numb of penalty
+        let result = 1
+        let temp = deg % 360
+        if (temp <= this.startDeg || 360 - this.startDeg < temp) {
+            result = 1
+        } else {
+            let _result = Math.floor((temp - this.startDeg) / this.pieceDegree)
+            if ((temp - this.startDeg) % this.pieceDegree !== 0) _result += 1
+            for (let index = 0; index < _result; index++) {
+                if (result === 1) {
+                    result = 4
+                } else {
+                    result -= 1
+                }
+            }
+        }
+        this.result = result
+            // this.startDeg = (this.pieceDegree - (temp - this.startDeg) % this.pieceDegree)
+            // alert(Math.floor(this.config.length / (temp / this.pieceDegree)) + 1)
+
         this.container.dataset.spinDeg = deg
         this.spinningSound.currentTime = 0
         this.spinningSound.play()
         this.container.style.transform = `rotate(${deg}deg)`
-        setTimeout(() => this.spinningSound.pause(), duration * 1000)
+        this.penContainer.innerHTML = ""
+        this.penContainer.style.display = "none"
+        setTimeout(() => {
+            this.spinningSound.pause()
+            this.penContainer.appendChild(this.drawPenalty())
+            this.penContainer.style.display = "flex"
+        }, duration * 1000)
     }
     calcPieceSize(config) {
         const quantity = config.length
@@ -46,11 +77,12 @@ class SpinningWheel {
     }
     drawPiece(pieceConfig, pieceIndex) {
         const piece = document.createElement("div")
+        piece.dataset.spinningMark = `${pieceConfig.order}|${pieceIndex+1}`
         piece.classList.add("piece")
         const height = this.pieceHeight
         const width = this.radius * 2
         const deg = pieceIndex * this.pieceDegree
-        console.log({ deg, width, height })
+            // console.log({ deg, width, height })
         piece.style.height = `${height}px`
         piece.style.width = `${width}px`
         piece.style.transform = `translateY(-50%) rotate(${deg}deg)`
@@ -62,7 +94,8 @@ class SpinningWheel {
         piece.appendChild(span)
         return piece
     }
-    drawPenalty(pieceConfig) {
+    drawPenalty() {
+        const pieceConfig = this.originConfig[this.result - 1]
         const penWrapper = document.createElement("div")
         penWrapper.classList.add("pen-wrapper")
         const numb = document.createElement("span")

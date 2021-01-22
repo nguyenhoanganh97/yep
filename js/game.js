@@ -31,7 +31,8 @@ class Game {
                 length: answer.length
             }
         });
-        this.config = shuffle(_config)
+        // this.config = shuffle(_config) //no longer shuffle
+        this.config = _config
         this.calcRow()
         this.calcSize()
         this.container.style.height = `${this.crosswordSize * this.config.length}px`
@@ -74,9 +75,10 @@ class Game {
     }
     calcRow() {
         this.config.forEach((row, rowIndex) => {
-            const keyIndex = []
-            row.answer.split("").forEach((character, index) => character === row.keyCharacter && keyIndex.push(index))
-            const randomKey = this.getRandomIndex(row.answer, keyIndex)
+            // const keyIndex = []
+            // row.answer.split("").forEach((character, index) => character === row.keyCharacter && keyIndex.push(index))
+            // const randomKey = this.getRandomIndex(row.answer, keyIndex) //no longer random key character
+            const randomKey = row.answer.split("").findIndex(character => character === row.keyCharacter)
             if (row.answer.length === this.maxLength) {
                 this.maxLengthIndex = rowIndex
             }
@@ -157,6 +159,7 @@ class Game {
         this.rowOpen.play()
     }
     showQuestion(questionIndex) {
+        console.log("show question")
         this.questionContainer.style.display = "flex"
         this.questionNumber.innerText = `Câu hỏi số ${questionIndex +  1}`
         this.question.innerText = this.config[questionIndex].question
